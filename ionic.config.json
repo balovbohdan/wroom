@@ -1,0 +1,7 @@
+{
+  "name": "wroom",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
