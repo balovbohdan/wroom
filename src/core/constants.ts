@@ -1,0 +1,9 @@
+export const HELP_TYPES = {
+  USER_HELPED: 'USER_HELPED',
+  SOMEONE_HELPED_TO_USER: 'SOMEONE_HELPED_TO_USER',
+};
+
+export const FEATURE_IDS = {
+  USER: 'USER',
+  VEHICLE: 'VEHICLE',
+};
