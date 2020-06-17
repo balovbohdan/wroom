@@ -5,8 +5,8 @@
       "dummy": ["dummy"],
       "core/*": ["core/*"],
       "pages/*": ["pages/*"],
-      "components/*": ["components/*"],
-      "environment": ["environments/environment"]
+      "environment": ["environment"],
+      "components/*": ["components/*"]
     },
   },
 }
