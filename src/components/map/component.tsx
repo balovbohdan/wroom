@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import { mergeDeepRight } from 'ramda';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-import dummy from 'core/dummy';
+import dummy from 'dummy';
 
 import Preloader from './preloader';
 import MapContent from './map-content';

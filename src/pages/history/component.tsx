@@ -2,7 +2,7 @@ import React from 'react';
 import { chevronBack } from 'ionicons/icons';
 import { IonPage, IonContent, IonIcon, IonRouterLink } from '@ionic/react';
 
-import dummy from 'core/dummy';
+import dummy from 'dummy';
 import Header from 'components/header';
 
 import Items from './items';

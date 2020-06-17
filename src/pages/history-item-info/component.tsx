@@ -3,7 +3,7 @@ import { chevronBack } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import { IonPage, IonContent, IonIcon, IonItem, IonText, IonRouterLink, IonGrid, IonRow, IonCol } from '@ionic/react';
 
-import dummy from 'core/dummy';
+import dummy from 'dummy';
 import Header from 'components/header';
 
 import { getHelpTypeTitle } from '../shared/utils/help-type';

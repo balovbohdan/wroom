@@ -1,18 +1,16 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
+    "baseUrl": "src",
     "jsx": "react",
     "target": "es5",
-    "baseUrl": "src",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "paths": {
-      "core/*": ["src/core/*"],
-      "pages/*": ["src/pages/*"],
-      "environment": ["src/environment"],
-      "components/*": ["src/components/*"]
-    },
-
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "strict": true,
     "noEmit": true,
     "allowJs": true,
@@ -24,5 +22,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
