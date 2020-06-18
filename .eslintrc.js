@@ -1,5 +1,4 @@
 module.exports = {
-  plugins: ['@ionic'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -16,6 +15,11 @@ module.exports = {
     react: {
       version: 'detect',
     },
+    'import/resolver': {
+      typescript: {
+        extensions: ['.js', '.ts', '.tsx'],
+      },
+    },
   },
   extends: [
     'plugin:@ionic/recommended',
@@ -28,6 +32,7 @@ module.exports = {
     'eslint-config-airbnb'
   ],
   plugins: [
+    '@ionic',
     'eslint-plugin-react',
     'eslint-plugin-jsx-a11y',
     'eslint-plugin-import',
@@ -41,6 +46,7 @@ module.exports = {
     'no-debugger': 'warn',
     'no-else-return': 'off',
     'keyword-spacing': 'error',
+    'no-confusing-arrow': 'off',
     'quotes': ['error', 'single'],
     'space-before-blocks': 'error',
     'no-negated-condition': 'error',
@@ -54,7 +60,6 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-newline': ['error', 'consistent'],
     'quote-props': ['error', 'consistent-as-needed'],
-    'no-confusing-arrow': ['error', { allowParens: true }],
     'object-curly-newline': ['error', { consistent: true }],
     'no-restricted-syntax': ['error', 'ExportAllDeclaration'],
     'arrow-spacing': ['error', { before: true, after: true }],
@@ -106,10 +111,12 @@ module.exports = {
     }],
     'react/sort-comp': ['error', {
       order: [
+        'static-variables',
+        'instance-variables',
         'static-methods',
         'lifecycle',
+        'instance-methods',
         'render',
-        'everything-else',
       ],
     }],
     'react/jsx-wrap-multilines': ['error', {
@@ -133,6 +140,10 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-useless-path-segments': 'error',
     'import/no-anonymous-default-export': 'error',
+    'import/extensions': ['error', {
+      ts: 'never',
+      tsx: 'never',
+    }],
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: ['**/*.test.js', '**/*.stories.js'],
     }],
@@ -167,5 +178,7 @@ module.exports = {
     'unicorn/expiring-todo-comments': 'off',
     'unicorn/consistent-function-scoping': 'off',
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 };

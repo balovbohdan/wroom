@@ -1,7 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import mapboxgl from 'mapbox-gl';
-import { mergeDeepRight } from 'ramda';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import dummy from 'dummy';
 

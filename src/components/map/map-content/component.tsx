@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import styled from 'styled-components';
 
 type Props = {
@@ -14,7 +13,7 @@ const MapContent = styled.div<Props>`
   width: 100%;
   height: 100%;
   transition: opacity 0.2s;
-  opacity: ${props => props.mapVisible ? 1 : 0};
+  opacity: ${(props) => props.mapVisible ? 1 : 0};
 `;
 
 export default MapContent;

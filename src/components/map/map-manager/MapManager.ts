@@ -10,11 +10,11 @@ import { Features } from './features';
 import * as constants from './constants';
 
 export class MapManager {
-  private props: T.Props;
-  private geolocation: Geolocation;
-  private map: mapboxgl.Map | null = null;
-  private features: Features | null = null;
+  private readonly props: T.Props;
+  private readonly geolocation: Geolocation;
   private readonly geolocationSubscription: any;
+  private map: mapboxgl.Map | undefined = undefined;
+  private features: Features | undefined = undefined;
 
   constructor(props: T.Props) {
     this.props = props;
@@ -78,7 +78,7 @@ export class MapManager {
         map.on('load', () => {
           map.resize();
           this.createFeatures(map, coordinates);
-          resolve(map as mapboxgl.Map);
+          resolve(map);
         });
       } catch (error) {
         reject(error);
@@ -104,7 +104,7 @@ export class MapManager {
     return [
       position.coords.longitude + constants.IOS_DEV_COORDINATES_CORRECTIONS.longitude,
       position.coords.latitude + constants.IOS_DEV_COORDINATES_CORRECTIONS.latitude,
-    ]
+    ];
   }
 
   private handleUserGeolocationChange = (coordinates: number[]) => {

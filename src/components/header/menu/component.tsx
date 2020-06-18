@@ -24,7 +24,7 @@ const Header: React.FC = () => (
           <IonRow>
             <IonCol size="3">
               <IonAvatar>
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" alt="avatar" />
               </IonAvatar>
             </IonCol>
             <IonCol className="ion-align-self-center">
