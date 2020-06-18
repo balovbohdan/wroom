@@ -1,6 +1,6 @@
 import React from 'react';
 import { chevronBack } from 'ionicons/icons';
-import { IonPage, IonContent, IonImg, IonIcon, IonItem, IonText, IonGrid, IonRow, IonRouterLink } from '@ionic/react';
+import { IonPage, IonContent, IonImg, IonIcon, IonText, IonGrid, IonRow, IonRouterLink } from '@ionic/react';
 
 import Header from 'components/header';
 

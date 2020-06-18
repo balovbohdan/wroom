@@ -1,4 +1,3 @@
-import { mergeDeepRight } from 'ramda';
 import { Map, GeoJSONSource } from 'mapbox-gl';
 
 import * as coreConstants from 'core/constants';

@@ -20,5 +20,5 @@ export const LAYER_DEFINITION: any = {
   },
   paint: {
     'text-color': 'white',
-  }
+  },
 };

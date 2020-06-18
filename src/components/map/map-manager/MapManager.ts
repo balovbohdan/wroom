@@ -1,8 +1,8 @@
 import mapboxgl from 'mapbox-gl';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-import * as coreConstants from 'core/constants';
 import environment from 'environment';
+import * as coreConstants from 'core/constants';
 
 import * as T from './types';
 import * as utils from './utils';
@@ -58,31 +58,27 @@ export class MapManager {
     }
   }
 
-  private createMap(): Promise<mapboxgl.Map> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const coordinates = await this.getUserCoordinates();
-        const map = new mapboxgl.Map({
-          zoom: constants.ZOOM,
-          pitch: constants.PITCH,
-          attributionControl: false,
-          center: coordinates as any,
-          style: constants.MAP_STYLE,
-          container: this.props.containerId,
-        });
+  private async createMap(): Promise<mapboxgl.Map> {
+    const coordinates = await this.getUserCoordinates();
+    const map = new mapboxgl.Map({
+      zoom: constants.ZOOM,
+      pitch: constants.PITCH,
+      attributionControl: false,
+      center: coordinates as any,
+      style: constants.MAP_STYLE,
+      container: this.props.containerId,
+    });
 
-        map.on('resize', () => {
-          this.props.onReadyToDisplay();
-        });
+    map.on('resize', () => {
+      this.props.onReadyToDisplay();
+    });
 
-        map.on('load', () => {
-          map.resize();
-          this.createFeatures(map, coordinates);
-          resolve(map);
-        });
-      } catch (error) {
-        reject(error);
-      }
+    return new Promise((resolve) => {
+      map.on('load', () => {
+        map.resize();
+        this.createFeatures(map, coordinates);
+        resolve(map);
+      });
     });
   }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import App from './App';
+import App from '.';
 
-test('renders without crashing', () => {
+test('it renders', () => {
   const { baseElement } = render(<App />);
 
   expect(baseElement).toBeDefined();

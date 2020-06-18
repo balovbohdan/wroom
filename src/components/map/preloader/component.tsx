@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IonSpinner } from '@ionic/react';
-import { refreshOutline } from 'ionicons/icons';
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { chevronBack } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
-import { IonPage, IonContent, IonIcon, IonItem, IonText, IonRouterLink, IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonPage, IonContent, IonIcon, IonItem, IonText, IonRouterLink } from '@ionic/react';
 
 import dummy from 'dummy';
 import Header from 'components/header';
@@ -12,7 +12,7 @@ type Props = RouteComponentProps<{
   id: string;
 }>;
 
-const HistoryItemInfo: React.FC<Props> = ({ match }) => {
+const HistoryItemInfo: React.FC<Props> = ({ match }: Props) => {
   const historyItem = dummy.history.find(({ id }) => id === match.params.id);
 
   return (

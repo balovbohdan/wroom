@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import {
-  IonIcon,
   IonText,
   IonGrid,
   IonRow,
@@ -11,19 +10,15 @@ import {
   IonRouterLink,
 } from '@ionic/react';
 
-import { getHelpTypeTitle } from '../../shared/utils/help-type';
+import { getHelpTypeTitle } from 'pages/shared/utils/help-type';
 
-type Item = {
-  id: string;
-  type: string;
-  time: string;
-};
+import * as T from './types';
 
 type Props = {
-  items: Item[];
+  items: T.Item[];
 };
 
-const Items: React.FC<Props> = ({ items }) => (
+const Items: React.FC<Props> = ({ items }: Props) => (
   <Fragment>
     {
       items.map(({ id, type, time }) => (

@@ -41,6 +41,14 @@ module.exports = {
     'eslint-plugin-unicorn',
     'eslint-plugin-react-hooks',
   ],
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      rules: {
+        'no-unused-vars': 'off',
+      },
+    },
+  ],
   rules: {
     semi: 'error',
     'no-debugger': 'warn',
@@ -93,7 +101,9 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/no-unused-prop-types': 'error',
     'react/no-did-mount-set-state': 'off',
+    'react/jsx-max-props-per-line': 'off',
     'react/no-did-update-set-state': 'off',
+    'react/jsx-first-prop-new-line': 'off',
     'react/jsx-no-duplicate-props': 'error',
     'react/destructuring-assignment': 'off',
     'react/jsx-one-expression-per-line': 'off',
@@ -145,7 +155,7 @@ module.exports = {
       tsx: 'never',
     }],
     'import/no-extraneous-dependencies': ['error', {
-      devDependencies: ['**/*.test.js', '**/*.stories.js'],
+      devDependencies: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx'],
     }],
     'import/order': ['error', {
       'newlines-between': 'always',
@@ -177,8 +187,14 @@ module.exports = {
     'unicorn/prevent-abbreviations': 'off',
     'unicorn/expiring-todo-comments': 'off',
     'unicorn/consistent-function-scoping': 'off',
-    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+    'unicorn/no-fn-reference-in-iterator': 'off',
+    'unicorn/filename-case': ['error', {
+  		cases: {
+        kebabCase: true,
+  			pascalCase: true,
+  		},
+  	}],
 
-    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
   },
 };
