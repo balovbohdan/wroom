@@ -123,10 +123,10 @@ module.exports = {
       selfClosing: 'after-props',
     }],
 
-    'graphql/template-strings': ['error', { env: 'literal' }],
-    'graphql/named-operations': ['error', { env: 'literal' }],
-    'graphql/no-deprecated-fields': ['warn', { env: 'literal' }],
-    'graphql/capitalized-type-name': ['error', { env: 'literal' }],
+    // 'graphql/template-strings': ['error', { env: 'literal' }],
+    // 'graphql/named-operations': ['error', { env: 'literal' }],
+    // 'graphql/no-deprecated-fields': ['warn', { env: 'literal' }],
+    // 'graphql/capitalized-type-name': ['error', { env: 'literal' }],
 
     'import/first': 'error',
     'import/no-cycle': 'error',
