@@ -1,2 +1,3 @@
 src/setupTests.ts
 src/serviceWorker.ts
+src/react-app-env.d.ts

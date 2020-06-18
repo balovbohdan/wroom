@@ -6,7 +6,7 @@ const commitLintConfig = require('./.commitlintrc');
 const commitHeaderPattern = commitLintConfig.parserPreset.parserOpts.headerPattern;
 const commitMessage = fs.readFileSync(process.env.HUSKY_GIT_PARAMS, 'utf8').toString();
 const commitHeader = commitMessage.split('\n')[0];
-const isCommitHeaderValid = isIgnored(commitMessage) && !commitHeaderPattern.test(commitHeader);
+const isCommitHeaderValid = isIgnored(commitMessage) || commitHeaderPattern.test(commitHeader);
 
 if (!isCommitHeaderValid) {
   console.error('Commit header does not match shape: id:<id> <type>(<scope>): <subject>');
