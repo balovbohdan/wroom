@@ -8,8 +8,10 @@
     "start-ios": "ionic capacitor run ios --external --livereload",
     "build": "react-scripts build",
     "test": "yarn run test:lint:eslint",
+    "test-def": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "sync": "ionic capacitor sync",
+    "test:component": "",
     "test:lint:eslint": "eslint src --cache --report-unused-disable-directives --ext .js,.ts,.tsx,.gql"
   },
   "browserslist": {
@@ -48,9 +50,6 @@
     "@commitlint/cli": "^8.3.5",
     "@commitlint/is-ignored": "^8.3.5",
     "@ionic/eslint-plugin": "^0.0.1",
-    "@testing-library/jest-dom": "^5.10.0",
-    "@testing-library/react": "^10.2.1",
-    "@testing-library/user-event": "^11.4.2",
     "@types/jest": "^26.0.0",
     "@types/mapbox-gl": "^1.10.2",
     "@types/node": "^14.0.13",
