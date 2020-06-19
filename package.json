@@ -34,9 +34,11 @@
     "@ionic-native/geolocation": "^5.26.0",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
+    "@ionic/storage": "^2.2.0",
     "@svgr/webpack": "4.3.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "auth0-js": "^9.13.2",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
@@ -97,10 +99,12 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
+    "@babel/helper-create-regexp-features-plugin": "^7.10.1",
     "@capacitor/cli": "2.1.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/is-ignored": "^8.3.5",
     "@ionic/eslint-plugin": "^0.0.1",
+    "@types/auth0-js": "^9.13.1",
     "@types/jest": "^26.0.0",
     "@types/mapbox-gl": "^1.10.2",
     "@types/node": "^14.0.13",
@@ -110,6 +114,7 @@
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
+    "auth0-lock": "^11.24.2",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-graphql": "^4.0.0",
@@ -119,6 +124,7 @@
     "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-unicorn": "^20.1.0",
     "husky": "^4.2.5",
+    "react-scripts": "3.4.1",
     "typescript": "^3.9.5"
   },
   "jest": {

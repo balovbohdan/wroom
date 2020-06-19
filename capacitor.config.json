@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "balovbohdan-gmail.com",
   "appName": "wroom",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
@@ -9,5 +9,8 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.31.45:8100"
+  }
 }
