@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { IonButton } from '@ionic/react';
 import styled from 'styled-components';
 
@@ -6,6 +6,7 @@ import cover from './cover.svg';
 
 type Props = {
   login: () => void;
+  signUp: (email: string, password: string) => void;
 };
 
 const Wrapper = styled.div`
@@ -27,7 +28,10 @@ const Cover = styled.div`
 const Landing: React.FC<Props> = (props: Props) => (
   <Wrapper>
     <Cover />
-    <IonButton onClick={props.login}>Войти</IonButton>
+    <div>
+      <IonButton onClick={props.login}>Войти</IonButton>
+      <IonButton onClick={() => props.signUp('balov_test@mail.com', 'TestPass1234')}>Зарегистрироваться</IonButton>
+    </div>
   </Wrapper>
 );
 

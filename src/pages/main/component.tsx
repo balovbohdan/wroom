@@ -9,8 +9,10 @@ type Props = {
 
 const authorized = false;
 
-const Main: React.FC<Props> = (props: Props) => {
-  return authorized ? <Content /> : <Landing login={props.auth.login} />;
-};
+const Main: React.FC<Props> = (props: Props) => (
+  authorized ? <Content /> : (
+    <Landing login={props.auth.login} signUp={props.auth.signUp} />
+  )
+);
 
 export default Main;

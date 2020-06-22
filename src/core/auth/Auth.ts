@@ -2,6 +2,8 @@ import { WebAuth } from 'auth0-js';
 
 import environment from 'environment';
 
+import * as utils from './utils';
+
 const RESPONSE_TYPE = 'token id_token';
 const REDIRECT_ON_LOGIN = 'redirect_on_login';
 const REQUESTED_SCOPES = 'openid profile email read:courses';
@@ -40,6 +42,12 @@ export class Auth {
       return this.userProfile;
     }
   }
+
+  signUp = async (email: string, password: string) => {
+    const response = await utils.signUp(email, password);
+
+    console.log('-------------------------------------------', response);
+  };
 
   login = () => {
     window.localStorage.setItem(REDIRECT_ON_LOGIN, JSON.stringify(this.history.location));
@@ -111,10 +119,10 @@ export class Auth {
   }
 
   private getAccessToken(): string | never {
-    if (!this.accessToken) {
-      throw new Error('Failed to find access token.');
-    } else {
+    if (this.accessToken) {
       return this.accessToken;
+    } else {
+      throw new Error('Failed to find access token.');
     }
   }
 
@@ -122,7 +130,7 @@ export class Auth {
     this.idToken = authResult.isToken;
     this.accessToken = authResult.accessToken;
     this.scopes = authResult.scopes || REQUESTED_SCOPES;
-    this.expiresAt = authResult.expiresIn * 1000 + Date.now();
+    this.expiresAt = (authResult.expiresIn * 1000) + Date.now();
 
     this.scheduleTokenRenewal();
   }

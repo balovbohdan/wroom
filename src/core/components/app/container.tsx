@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import { Auth } from 'core/Auth';
+import { Auth } from 'core/auth';
 
 import App from './component';
 

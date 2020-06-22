@@ -126,6 +126,7 @@ module.exports = {
         'static-methods',
         'lifecycle',
         'instance-methods',
+        'everything-else',
         'render',
       ],
     }],
