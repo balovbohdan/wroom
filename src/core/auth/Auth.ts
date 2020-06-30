@@ -1,64 +1,72 @@
-import { WebAuth } from 'auth0-js';
+/* eslint @typescript-eslint/camelcase: 0 */
+
+import Auth0Lock from 'auth0-lock';
+import { Auth0Error } from 'auth0-js';
 
 import environment from 'environment';
 
-import * as utils from './utils';
-
-const RESPONSE_TYPE = 'token id_token';
-const REDIRECT_ON_LOGIN = 'redirect_on_login';
-const REQUESTED_SCOPES = 'openid profile email read:courses';
+import * as T from './types';
+import * as constants from './constants';
+import validateUser from './validate-user';
+import validateAuthResult from './validate-auth-result';
 
 export class Auth {
-  private readonly auth0: any;
   private readonly history: any;
-  private userProfile: any;
-  private scopes: any;
-  private idToken: any;
-  private expiresAt: any;
-  private accessToken: any;
+  private scopes = '';
+  private idToken = '';
+  private accessToken = '';
+  private expiresAt = 0;
+  private user: T.User | undefined = undefined;
+  private auth0Lock: typeof Auth0Lock = new Auth0Lock(environment.AUTH0_CLIENT_ID, environment.AUTH0_DOMAIN, {
+    auth: {
+      autoParseHash: true,
+      audience: environment.AUTH0_AUDIENCE,
+      responseType: constants.AUTH0_RESPONSE_TYPE,
+      params: {
+        scope: constants.AUTH0_REQUESTED_SCOPES,
+      },
+    },
+  });
 
   constructor(history: any) {
     this.history = history;
-    this.auth0 = new WebAuth({
-      domain: environment.AUTH0_DOMAIN,
-      audience: environment.AUTH0_AUDIENCE,
-      clientID: environment.AUTH0_CLIENT_ID,
-      redirectUri: environment.AUTH0_CALLBACK_URL,
-      scope: REQUESTED_SCOPES,
-      responseType: RESPONSE_TYPE,
-    });
+
+    this.auth0Lock.on('authenticated', this.handleAuthenticated);
   }
 
-  get isAuthenticated(): boolean {
+  get authenticated(): boolean {
     return Date.now() < this.expiresAt;
   }
 
-  async loadUserProfile(): Promise<any> {
-    if (this.userProfile) {
-      return this.userProfile;
-    } else {
-      this.userProfile = await this.getUserProfileFromAuth0();
+  renewToken = async (): Promise<void | never> => (
+    new Promise((resolve, reject) => {
+      this.auth0Lock.checkSession({}, (auth0Error: Auth0Error | null, authResult: T.AuthResult | undefined) => {
+        if (auth0Error) {
+          reject(auth0Error);
+        } else if (authResult) {
+          try {
+            validateAuthResult(authResult);
+            this.setSession(authResult);
+            this.scheduleTokenRenewal();
+            this.getUser();
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        } else {
+          reject(new Error('Failed to renew token. Got invalid response.'));
+        }
+      });
+    })
+  );
 
-      return this.userProfile;
-    }
-  }
-
-  signUp = async (email: string, password: string) => {
-    const response = await utils.signUp(email, password);
-
-    console.log('-------------------------------------------', response);
-  };
-
-  login = () => {
-    window.localStorage.setItem(REDIRECT_ON_LOGIN, JSON.stringify(this.history.location));
-    this.auth0.authorize();
+  login = async (email: string, password: string): Promise<void> => {
+    this.auth0Lock.show();
   };
 
   logout = () => {
-    this.auth0.logout({
-      returnTo: '/',
-      clientID: environment.AUTH0_CLIENT_ID,
-    });
+    this.clearSession();
+    this.history.push('/');
   };
 
   checkUserHasScopes = (requiredScopes: string[]): boolean => {
@@ -67,52 +75,41 @@ export class Auth {
     return requiredScopes.every((scope) => grantedScopes.includes(scope));
   };
 
-  renewToken = async (): Promise<void> => (
-    new Promise((resolve, reject) => {
-      this.auth0.checkSession({}, (error: any, result: any) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-        } else {
-          this.setSession(result);
-          resolve(result);
-        }
-      });
-    })
-  );
-
-  handleAuthentication = () => {
-    this.auth0.parseHash((error: any, authResult: any) => {
-      const isAuthResultValid = authResult && authResult.accessToken && authResult.idToken;
-
-      if (isAuthResultValid) {
-        const redirectOnLogin = localStorage.getItem(REDIRECT_ON_LOGIN);
-        const redirectLocation = redirectOnLogin ? JSON.parse(redirectOnLogin) : '/';
-
-        this.setSession(authResult);
-        this.history.push(redirectLocation);
-      } else if (error) {
-        this.history.push('/');
-        alert(`Error: ${error}. Check the console for further details.`);
-        console.error(error);
-      }
-
-      localStorage.removeItem(REDIRECT_ON_LOGIN);
-    });
+  private handleAuthenticated = async (authResult: T.AuthResult) => {
+    this.setSession(authResult);
+    this.scheduleTokenRenewal();
   };
 
-  private getUserProfileFromAuth0(): Promise<any> {
+  private async getUser(): Promise<T.User> {
+    if (this.user) {
+      return this.user;
+    } else {
+      this.user = await this.loadUser();
+
+      return this.user;
+    }
+  }
+
+  private loadUser(): Promise<T.User> {
     return new Promise((resolve, reject) => {
       const accessToken = this.getAccessToken();
 
-      this.auth0.client.userInfo(accessToken, (error: any, userProfile: any) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-        } else if (userProfile) {
-          resolve(userProfile);
+      this.auth0Lock.getUserInfo(accessToken, (auth0Error: Auth0Error, user: any | undefined) => {
+        if (auth0Error) {
+          reject(auth0Error);
+        } else if (user) {
+          try {
+            validateUser(user);
+            resolve({
+              email: user.email,
+              emailVerified: user.email_verified,
+              avatar: user.picture,
+            });
+          } catch (error) {
+            reject(error);
+          }
         } else {
-          reject(new Error('Failed to fetch user profile from Auth0.'));
+          reject(new Error('Failed to fetch auth0 user profile.'));
         }
       });
     });
@@ -126,13 +123,17 @@ export class Auth {
     }
   }
 
-  private setSession(authResult: any) {
-    this.idToken = authResult.isToken;
+  private setSession(authResult: T.AuthResult) {
     this.accessToken = authResult.accessToken;
-    this.scopes = authResult.scopes || REQUESTED_SCOPES;
-    this.expiresAt = (authResult.expiresIn * 1000) + Date.now();
+    this.expiresAt = authResult.expiresIn + Date.now();
+    this.scopes = authResult.scope || constants.AUTH0_REQUESTED_SCOPES;
+  }
 
-    this.scheduleTokenRenewal();
+  private clearSession() {
+    this.idToken = '';
+    this.expiresAt = 0;
+    this.accessToken = '';
+    this.scopes = '';
   }
 
   private scheduleTokenRenewal() {

@@ -51,6 +51,7 @@ module.exports = {
   ],
   rules: {
     semi: 'error',
+    camelcase: 'off',
     'no-debugger': 'warn',
     'no-else-return': 'off',
     'keyword-spacing': 'error',

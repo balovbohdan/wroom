@@ -1,18 +1,16 @@
 import React from 'react';
 
+import { withAuthContext } from 'shared/components/auth-context';
+
 import Landing from './landing';
 import Content from './content';
 
 type Props = {
-  auth: any;
+  authContext: any;
 };
 
-const authorized = false;
-
 const Main: React.FC<Props> = (props: Props) => (
-  authorized ? <Content /> : (
-    <Landing login={props.auth.login} signUp={props.auth.signUp} />
-  )
+  props.authContext.authenticated ? <Content /> : <Landing login={props.authContext.login} />
 );
 
-export default Main;
+export default withAuthContext(Main);

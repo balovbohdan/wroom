@@ -7,6 +7,7 @@ import History from 'pages/history';
 import HistoryItemInfo from 'pages/history-item-info';
 import Main from 'pages/main';
 import Settings from 'pages/settings';
+import AuthContext from 'shared/components/auth-context';
 
 type Props = {
   auth: any;
@@ -16,14 +17,16 @@ type Props = {
 const App: React.FC<Props> = (props: Props) => (
   props.tokenRenewalCompleted ? (
     <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path="/history" component={History} exact />
-          <Route path="/history-item-info/:id" component={HistoryItemInfo} />
-          <Route path="/" component={(ownProps: any) => <Main {...ownProps} auth={props.auth} />} exact />
-          <Route path="/settings" component={Settings} exact />
-        </IonRouterOutlet>
-      </IonReactRouter>
+      <AuthContext.Provider value={props.auth}>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route path="/history" component={History} exact />
+            <Route path="/history-item-info/:id" component={HistoryItemInfo} />
+            <Route path="/" component={Main} exact />
+            <Route path="/settings" component={Settings} exact />
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </AuthContext.Provider>
     </IonApp>
   ) : (
     <span>Loading...</span>

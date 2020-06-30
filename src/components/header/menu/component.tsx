@@ -1,5 +1,5 @@
 import React from 'react';
-import { star, fileTrayStackedOutline, settingsOutline } from 'ionicons/icons';
+import { star, exitOutline, fileTrayStackedOutline, settingsOutline } from 'ionicons/icons';
 import {
   IonMenu,
   IonContent,
@@ -14,9 +14,15 @@ import {
   IonText,
 } from '@ionic/react';
 
+import { withAuthContext } from 'shared/components/auth-context';
+
 import * as style from './style';
 
-const Header: React.FC = () => (
+type Props = {
+  authContext: any;
+};
+
+const Header: React.FC<Props> = (props: Props) => (
   <IonMenu side="start" type="push" contentId="menu">
     <IonContent>
       <IonItem color="light" lines="none">
@@ -50,9 +56,13 @@ const Header: React.FC = () => (
           <IonIcon icon={settingsOutline} slot="start" />
           <IonLabel>Настройки</IonLabel>
         </IonItem>
+        <IonItem onClick={props.authContext.logout} detail={false}>
+          <IonIcon icon={exitOutline} slot="start" />
+          <IonLabel>Выйти</IonLabel>
+        </IonItem>
       </IonList>
     </IonContent>
   </IonMenu>
 );
 
-export default Header;
+export default withAuthContext(Header);

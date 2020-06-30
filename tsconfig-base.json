@@ -5,6 +5,7 @@
       "dummy": ["dummy"],
       "core/*": ["core/*"],
       "pages/*": ["pages/*"],
+      "shared/*": ["shared/*"],
       "environment": ["environment"],
       "components/*": ["components/*"]
     },

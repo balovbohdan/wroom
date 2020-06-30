@@ -18,7 +18,7 @@ class AppContainer extends Component<RouteComponentProps> {
 
   private async renewAuthToken() {
     try {
-      // await this.auth.renewToken();
+      await this.auth.renewToken();
     } finally {
       this.setState(() => ({ tokenRenewalCompleted: true }));
     }
